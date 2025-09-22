@@ -15,7 +15,7 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Aplikasi Hemat Energi - Solusi Cerdas untuk Masa Depan Berkelanjutan",
   description: "Platform edukasi dan manajemen energi terbarukan untuk kehidupan yang lebih hemat dan berkelanjutan",
-  generator: "v0.app",
+  generator: "@zikrifikri.21",
 }
 
 export default function RootLayout({

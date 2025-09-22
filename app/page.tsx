@@ -7,10 +7,44 @@ import { ArrowRight, Leaf, Lightbulb, Sun, Zap, BookOpen, Users } from "lucide-r
 import Link from "next/link";
 import ElectricityCalculator from "@/components/electricity-calculator";
 import NavbarLanding from "@/components/ui/navbar-landing";
+import Head from 'next/head';
 
 export default function HomePage() {
   return (
+    <>
+    <Head>
+        <title>Aplikasi Hemat Energi - Solusi Cerdas untuk Masa Depan Berkelanjutan</title>
+        <meta name="description" content="Platform edukasi dan manajemen energi terbarukan untuk kehidupan yang lebih hemat dan berkelanjutan" />
+        <meta name="keywords" content="login, green energy, renewable energy, wind turbines, sustainable technology" />
+
+        {/* Open Graph meta tags */}
+        <meta property="og:title" content="Login - Green Energy Platform" />
+        <meta property="og:description" content="Platform edukasi dan manajemen energi terbarukan untuk kehidupan yang lebih hemat dan berkelanjutan" />
+        <meta
+          property="og:image"
+          content="https://www.omv.com/images/GvflD8YyeyxOOJFgPN1juD8YainJ-lH3HR5e-kVPCCk/c:4000:2250:fp:0.589:0.512/resize:fill-down:768:432/plain/local:///2024/06/9eb4fa9b-6881-65bd-c3e3-d8ca49a106e8/OMV_Energy_Green-Hydrogen_Wind-Turbine-Aerial-View-01_RGB_web.jpg@webp"
+        />
+        <meta property="og:image:alt" content="Aerial view of wind turbines generating green energy" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={typeof window !== "undefined" ? window.location.href : ""} />
+
+        {/* Twitter Card meta tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Login - Green Energy Platform" />
+        <meta name="twitter:description" content="Platform edukasi dan manajemen energi terbarukan untuk kehidupan yang lebih hemat dan berkelanjutan" />
+        <meta
+          name="twitter:image"
+          content="https://www.omv.com/images/GvflD8YyeyxOOJFgPN1juD8YainJ-lH3HR5e-kVPCCk/c:4000:2250:fp:0.589:0.512/resize:fill-down:768:432/plain/local:///2024/06/9eb4fa9b-6881-65bd-c3e3-d8ca49a106e8/OMV_Energy_Green-Hydrogen_Wind-Turbine-Aerial-View-01_RGB_web.jpg@webp"
+        />
+        <meta name="twitter:image:alt" content="Aerial view of wind turbines generating green energy" />
+
+        {/* Additional meta tags */}
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#059669" />
+        <link rel="canonical" href={typeof window !== "undefined" ? window.location.href : ""} />
+      </Head>
     <div className="min-h-screen bg-background">
+
       {/* Navigation */}
       <NavbarLanding />
       {/* Hero Section */}
@@ -252,5 +286,6 @@ export default function HomePage() {
         </div>
       </footer>
     </div>
+    </>
   );
 }
