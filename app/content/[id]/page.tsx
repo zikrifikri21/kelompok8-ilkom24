@@ -15,7 +15,8 @@ export default async function ContentDetailPage({
 }) {
   const { id } = await params
   const supabase = await createClient()
-
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://energicerdas.com").trim()
+  
   const { data: content, error } = await supabase
     .from("educational_content")
     .select("*")
@@ -99,19 +100,17 @@ export default async function ContentDetailPage({
             </h1>
             <p className="text-lg text-muted-foreground mb-6 text-vintage">{content.summary}</p>
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                <Calendar className="w-4 h-4" />
-                {new Date(content.created_at).toLocaleDateString("id-ID", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })}
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                  <Calendar className="w-4 h-4" />
+                  {new Date(content.created_at).toLocaleDateString("id-ID", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </div>
+                <ShareButtons url={`${siteUrl}/content/${content.id}`} title={content.title} description={content.summary} size="sm" />
               </div>
-              <ShareButtons
-                url={`${process.env.NEXT_PUBLIC_SITE_URL || "https://energicerdas.com"}/content/${content.id}`}
-                title={content.title}
-                description={content.summary}
-              />
             </div>
           </header>
 
@@ -160,12 +159,7 @@ export default async function ContentDetailPage({
                 <p className="text-muted-foreground mb-4">
                   Bantu sebarkan informasi tentang hemat energi kepada teman dan keluarga
                 </p>
-                <ShareButtons
-                  url={`${process.env.NEXT_PUBLIC_SITE_URL || "https://energicerdas.com"}/content/${content.id}`}
-                  title={content.title}
-                  description={content.summary}
-                  size="lg"
-                />
+                <ShareButtons url={`${siteUrl}/content/${content.id}`} title={content.title} description={content.summary} size="sm" />
               </div>
             </CardContent>
           </Card>

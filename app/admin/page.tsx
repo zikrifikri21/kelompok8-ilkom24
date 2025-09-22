@@ -1,26 +1,26 @@
-import { redirect } from "next/navigation"
-import { createClient } from "@/lib/supabase/server"
-import { ContentManagement } from "@/components/content-management"
-import { AdminHeader } from "@/components/admin-header"
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+import { ContentManagement } from "@/components/content-management";
+import { NavbarAdmin } from '@/components/navbar-admin';
 
 export default async function AdminPage() {
-  const supabase = await createClient()
+  const supabase = await createClient();
 
-  const { data, error } = await supabase.auth.getUser()
+  const { data, error } = await supabase.auth.getUser();
   if (error || !data?.user) {
-    redirect("/auth/login")
+    redirect("/auth/login");
   }
 
   // Check if user is admin
-  const { data: adminUser } = await supabase.from("admin_users").select("*").eq("id", data.user.id).single()
+  const { data: adminUser } = await supabase.from("admin_users").select("*").eq("id", data.user.id).single();
 
   if (!adminUser) {
-    redirect("/auth/login?error=unauthorized")
+    redirect("/auth/login?error=unauthorized");
   }
 
   return (
     <div className="min-h-screen bg-background">
-      <AdminHeader />
+      <NavbarAdmin />
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">Panel Admin</h1>
@@ -29,5 +29,5 @@ export default async function AdminPage() {
         <ContentManagement />
       </div>
     </div>
-  )
+  );
 }

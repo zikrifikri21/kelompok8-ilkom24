@@ -46,7 +46,7 @@ function LoginForm() {
         data: { user },
       } = await supabase.auth.getUser();
       if (user) {
-        router.push("/dashboard");
+        router.push("/admin");
       }
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");
@@ -173,12 +173,13 @@ function LoginForm() {
             </form>
 
             <div className="mt-6 text-center">
-              {/* <p className="text-sm text-emerald-600 md:text-gray-600">
-                Don't have account?{" "}
-                <Link href="/signup" className="font-medium text-emerald-700 md:text-green-600 hover:underline">
-                  Sign up
+              <p className="text-sm text-emerald-600 md:text-gray-600">
+                {/* Don't have account?{" "} */}
+                <Link href="/" className="font-medium text-emerald-700 md:text-green-600 hover:underline">
+                  {/* Sign up */}
+                  Kembali keberanda
                 </Link>
-              </p> */}
+              </p>
             </div>
           </div>
         </div>

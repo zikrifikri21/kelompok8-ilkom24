@@ -1,11 +1,11 @@
 import { createClient } from "@/lib/supabase/server"
-import { ContentGrid } from "@/components/content-grid"
-import { ContentFilters } from "@/components/content-filters"
+import { ContentLayout } from "@/components/content-layout"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { BookOpen, Leaf } from "lucide-react"
 import Link from "next/link"
 import { Suspense } from "react"
+import { ContentList } from "@/components/content-list"
 
 export default async function ContentPage({
   searchParams,
@@ -86,41 +86,7 @@ export default async function ContentPage({
       {/* Content Section */}
       <section className="py-12 px-4">
         <div className="container mx-auto">
-          <div className="flex flex-col lg:flex-row gap-8">
-            {/* Filters Sidebar */}
-            <div className="lg:w-1/4">
-              <Suspense
-                fallback={
-                  <div className="space-y-6">
-                    <div className="animate-pulse">
-                      <div className="bg-white rounded-lg shadow-md p-6">
-                        <div className="h-6 bg-gray-200 rounded mb-4"></div>
-                        <div className="h-10 bg-gray-200 rounded mb-3"></div>
-                        <div className="h-10 bg-gray-200 rounded"></div>
-                      </div>
-                    </div>
-                    <div className="animate-pulse">
-                      <div className="bg-white rounded-lg shadow-md p-6">
-                        <div className="h-6 bg-gray-200 rounded mb-4"></div>
-                        <div className="space-y-2">
-                          <div className="h-12 bg-gray-200 rounded"></div>
-                          <div className="h-12 bg-gray-200 rounded"></div>
-                          <div className="h-12 bg-gray-200 rounded"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                }
-              >
-                <ContentFilters />
-              </Suspense>
-            </div>
-
-            {/* Content Grid */}
-            <div className="lg:w-3/4">
-              <ContentGrid contents={contents || []} />
-            </div>
-          </div>
+          <ContentLayout  />
         </div>
       </section>
     </div>
