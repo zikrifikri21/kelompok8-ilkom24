@@ -12,6 +12,7 @@
 | Anggota | Agung Hidayat   | F1G124022  |
 | Anggota | Aksar Febrianto | F1G124058  |
 | Anggota | Ahlul Fikri     | F1G124056  |
+| Anggota | jesita aprimesti| F1G124005  |
 
 
 ## Documentation
