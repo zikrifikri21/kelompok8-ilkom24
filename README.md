@@ -4,10 +4,11 @@
 
 ## Daftar kelompok
 
-| Peran   | Nama        | NIM       |
-| ------- | ----------- | --------- |
-| Anggota | Ahlul Fikri | F1G124056 |
-| Anggota | Nurul Asiza | F1G124047 |
+| Peran   | Nama             | NIM       |
+| ------- | ---------------- | --------- |
+| Anggota | Ahlul Fikri      | F1G124056 |
+| Anggota | Nurul Asiza      | F1G124047 |
+| Anggota | Jesita Aprimesti | F1G124032 |
 
 ## Documentation
 
