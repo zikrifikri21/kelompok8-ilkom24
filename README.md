@@ -4,10 +4,10 @@
 
 ## Daftar kelompok
 
-| Peran   | Nama        | NIM       |
-| ------- | ----------- | --------- |
-| Anggota | Ahlul Fikri | F1G124056 |
-| Anggota | Ahlul Fikri | F1G124056 |
+| Peran   | Nama         | NIM       |
+| ------- | -------------| --------- |
+| Anggota | Ahlul Fikri  | F1G124056 |
+| Anggota | Agung Hidayat| F1G124022 |
 
 ## Documentation
 
