@@ -7,6 +7,7 @@
 | Peran   | Nama        | NIM       |
 | ------- | ----------- | --------- |
 | Anggota | Ahlul Fikri | F1G124056 |
+| Anggota | Nurul Asiza | F1G124047 |
 
 ## Documentation
 
