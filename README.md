@@ -7,6 +7,7 @@
 | Peran   | Nama        | NIM       |
 | ------- | ----------- | --------- |
 | Anggota | Ahlul Fikri | F1G124056 |
+| Anggota | Ahlul Fikri | F1G124056 |
 
 ## Documentation
 
