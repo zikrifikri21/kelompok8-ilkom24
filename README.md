@@ -8,11 +8,12 @@
 
 | Peran   | Nama            | NIM        |
 |---------|-----------------|------------|
-| Ketua   | jesita aprimesti| F1G124005  |
-| Anggota | Citra           | F1G124005  |
+| Ketua   | Jesita Aprimesti| F1G124032 |
+| Anggota | Nurul Asiza     | F1G124047  |
 | Anggota | Agung Hidayat   | F1G124022  |
 | Anggota | Aksar Febrianto | F1G124058  |
 | Anggota | Ahlul Fikri     | F1G124056  |
+| Anggota | Citra           | F1G124005  |
 
 
 ## Documentation
