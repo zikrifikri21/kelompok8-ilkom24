@@ -8,7 +8,7 @@
 
 | Peran   | Nama            | NIM        |
 |---------|-----------------|------------|
-| Ketua   | Jesita Aprimesti| F1G124032 |
+| Ketua   | Jesita Aprimesti| F1G124032  |
 | Anggota | Nurul Asiza     | F1G124047  |
 | Anggota | Agung Hidayat   | F1G124022  |
 | Anggota | Aksar Febrianto | F1G124058  |
