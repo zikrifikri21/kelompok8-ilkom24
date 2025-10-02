@@ -1,6 +1,4 @@
-
 # Hi! 👋
-
 
 # Kelompok 7 & 8 RPL
 
@@ -20,11 +18,9 @@
 
 [Documentation](https://github.com/zikrifikri21/kelompok8-ilkom24)
 
-
 ## Features
 
 - Light/dark mode toggle
 - Live previews
 - Fullscreen mode
 - Cross platform
-
