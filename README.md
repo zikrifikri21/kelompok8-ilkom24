@@ -12,7 +12,7 @@
 | Anggota | Agung Hidayat    | F1G124022 |
 | Anggota | Aksar Febrianto  | F1G124058 |
 | Anggota | Citra            | F1G124005 |
-| Anggota | Ahlul Fikri      | F1G124056 |
+| Anggota | Zikri Fikri      | F1G124099 |
 
 ## Documentation
 
