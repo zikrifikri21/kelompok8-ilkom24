@@ -16,8 +16,8 @@
 
 ## Documentation
 ### Setup .env
+```
 GOOGLE_GENERATIVE_AI_API_KEY=
-
 #supabase
 SUPABASE_URL=
 SUPABASE_JWT_SECRET=
@@ -35,7 +35,7 @@ POSTGRES_HOST=
 POSTGRES_URL_NON_POOLING=
 POSTGRES_URL=
 POSTGRES_PRISMA_URL=
-
+```
 [Documentation](https://github.com/zikrifikri21/kelompok8-ilkom24)
 
 ## Features
