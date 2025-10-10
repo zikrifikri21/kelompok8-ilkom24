@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Trash2, Plus, Calculator, Zap, DollarSign } from "lucide-react"
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
-import { motion } from "framer-motion"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "./ui/chart"
 
 interface Device {
   id: string
@@ -266,62 +266,39 @@ export default function ElectricityCalculator() {
           </Card>
 
           {/* Charts */}
-          <Card className="border-none shadow-lg rounded-2xl bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
-            <CardHeader className="pb-0">
-              <CardTitle className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">⚡ Visualisasi Konsumsi</CardTitle>
+          <Card>
+            <CardHeader>
+              <CardTitle>Visualisasi Konsumsi</CardTitle>
             </CardHeader>
-            <CardContent className="mt-4 space-y-8">
-              {/* Pie Chart */}
-              <div>
-                <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-3">Distribusi Konsumsi per Perangkat</h4>
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="h-56">
-                  <ResponsiveContainer width="100%" height="100%">
+            <CardContent>
+              <div className="space-y-6">
+                {/* Pie Chart */}
+                <div>
+                  <h4 className="font-semibold mb-2">Distribusi Konsumsi per Perangkat</h4>
+                  <ChartContainer config={{}} className="[&_.recharts-text]:fill-background mx-auto aspect-square max-h-[250px]">
                     <PieChart>
-                      <Pie data={chartData} cx="50%" cy="50%" outerRadius={90} dataKey="value" label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}>
+                      <ChartTooltip content={<ChartTooltipContent nameKey="value" hideLabel />} />
+                      <Pie data={chartData} dataKey="value" nameKey="name" label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}>
                         {chartData.map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={entry.color} />
                         ))}
                       </Pie>
-                      <Tooltip
-                        contentStyle={{
-                          backgroundColor: "white",
-                          borderRadius: "8px",
-                          border: "none",
-                          boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                        }}
-                        formatter={(value: number) => [`${value.toFixed(2)} kWh`, "Konsumsi"]}
-                      />
                     </PieChart>
-                  </ResponsiveContainer>
-                </motion.div>
-              </div>
+                  </ChartContainer>
+                </div>
 
-              {/* Bar Chart */}
-              <div>
-                <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-3">Konsumsi Bulanan per Perangkat</h4>
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1 }} className="h-56">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={chartData}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                      <XAxis dataKey="name" tick={{ fill: "#6b7280" }} />
-                      <YAxis tick={{ fill: "#6b7280" }} />
-                      <Tooltip
-                        contentStyle={{
-                          backgroundColor: "white",
-                          borderRadius: "8px",
-                          border: "none",
-                          boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-                        }}
-                        formatter={(value: number) => [`${value.toFixed(2)} kWh`, "Konsumsi"]}
-                      />
-                      <Bar dataKey="value" radius={[8, 8, 0, 0]}>
-                        {chartData.map((entry, index) => (
-                          <Cell key={`cell-bar-${index}`} fill={entry.color} />
-                        ))}
-                      </Bar>
+                {/* Bar Chart */}
+                <div>
+                  <h4 className="font-semibold mb-2">Konsumsi Bulanan per Perangkat</h4>
+                  <ChartContainer config={{}}>
+                    <BarChart accessibilityLayer data={chartData}>
+                      <CartesianGrid vertical={false} />
+                      <XAxis dataKey="name" tickLine={false} tickMargin={10} axisLine={false} />
+                      <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+                      <Bar dataKey="value" fill="#8884d8" radius={8} />
                     </BarChart>
-                  </ResponsiveContainer>
-                </motion.div>
+                  </ChartContainer>
+                </div>
               </div>
             </CardContent>
           </Card>
