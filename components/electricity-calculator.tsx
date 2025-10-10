@@ -137,8 +137,9 @@ export default function ElectricityCalculator() {
               <Input
                 id="rate"
                 type="number"
+                min={100}
                 value={electricityRate}
-                onChange={(e) => setElectricityRate(Number(e.target.value))}
+                onChange={(e) => setElectricityRate(Math.max(100, Number(e.target.value)))}
                 placeholder="1500"
               />
             </div>
@@ -163,8 +164,14 @@ export default function ElectricityCalculator() {
                   <Input
                     id={`power-${device.id}`}
                     type="number"
-                    value={device.power || ""}
-                    onChange={(e) => updateDevice(device.id, "power", Number(e.target.value))}
+                    value={device.power || 0}
+                    onChange={(e) => {
+                      const value = Number(e.target.value)
+                      if (value < 0) {
+                        return
+                      }
+                      updateDevice(device.id, "power", value)
+                    }}
                     placeholder="100"
                   />
                 </div>
@@ -175,7 +182,13 @@ export default function ElectricityCalculator() {
                     type="number"
                     step="0.5"
                     value={device.dailyUsage || ""}
-                    onChange={(e) => updateDevice(device.id, "dailyUsage", Number(e.target.value))}
+                    onChange={(e) => {
+                      const value = Number(e.target.value)
+                      if (value < 0) {
+                        return
+                      }
+                      updateDevice(device.id, "dailyUsage", value)
+                    }}
                     placeholder="8"
                   />
                 </div>
@@ -185,7 +198,13 @@ export default function ElectricityCalculator() {
                     id={`quantity-${device.id}`}
                     type="number"
                     value={device.quantity || ""}
-                    onChange={(e) => updateDevice(device.id, "quantity", Number(e.target.value))}
+                    onChange={(e) => {
+                      const value = Number(e.target.value)
+                      if (value < 1) {
+                        return
+                      }
+                      updateDevice(device.id, "quantity", value)
+                    }}
                     placeholder="1"
                   />
                 </div>
