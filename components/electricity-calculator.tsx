@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Trash2, Plus, Calculator, Zap, DollarSign } from "lucide-react"
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
+import { motion } from "framer-motion"
 
 interface Device {
   id: string
@@ -134,14 +135,7 @@ export default function ElectricityCalculator() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="rate">Tarif Listrik (IDR per kWh)</Label>
-              <Input
-                id="rate"
-                type="number"
-                min={100}
-                value={electricityRate}
-                onChange={(e) => setElectricityRate(Math.max(100, Number(e.target.value)))}
-                placeholder="1500"
-              />
+              <Input id="rate" type="number" min={100} value={electricityRate} onChange={(e) => setElectricityRate(Math.max(100, Number(e.target.value)))} placeholder="1500" />
             </div>
           </div>
 
@@ -152,12 +146,7 @@ export default function ElectricityCalculator() {
               <div key={device.id} className="grid grid-cols-1 md:grid-cols-5 gap-4 p-4 border rounded-lg">
                 <div>
                   <Label htmlFor={`name-${device.id}`}>Nama Perangkat</Label>
-                  <Input
-                    id={`name-${device.id}`}
-                    value={device.name}
-                    onChange={(e) => updateDevice(device.id, "name", e.target.value)}
-                    placeholder="Contoh: TV LED"
-                  />
+                  <Input id={`name-${device.id}`} value={device.name} onChange={(e) => updateDevice(device.id, "name", e.target.value)} placeholder="Contoh: TV LED" />
                 </div>
                 <div>
                   <Label htmlFor={`power-${device.id}`}>Daya (Watt)</Label>
@@ -166,11 +155,11 @@ export default function ElectricityCalculator() {
                     type="number"
                     value={device.power || 0}
                     onChange={(e) => {
-                      const value = Number(e.target.value)
+                      const value = Number(e.target.value);
                       if (value < 0) {
-                        return
+                        return;
                       }
-                      updateDevice(device.id, "power", value)
+                      updateDevice(device.id, "power", value);
                     }}
                     placeholder="100"
                   />
@@ -183,11 +172,11 @@ export default function ElectricityCalculator() {
                     step="0.5"
                     value={device.dailyUsage || ""}
                     onChange={(e) => {
-                      const value = Number(e.target.value)
+                      const value = Number(e.target.value);
                       if (value < 0) {
-                        return
+                        return;
                       }
-                      updateDevice(device.id, "dailyUsage", value)
+                      updateDevice(device.id, "dailyUsage", value);
                     }}
                     placeholder="8"
                   />
@@ -199,22 +188,17 @@ export default function ElectricityCalculator() {
                     type="number"
                     value={device.quantity || ""}
                     onChange={(e) => {
-                      const value = Number(e.target.value)
+                      const value = Number(e.target.value);
                       if (value < 1) {
-                        return
+                        return;
                       }
-                      updateDevice(device.id, "quantity", value)
+                      updateDevice(device.id, "quantity", value);
                     }}
                     placeholder="1"
                   />
                 </div>
                 <div className="flex items-end">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => removeDevice(device.id)}
-                    disabled={devices.length === 1}
-                  >
+                  <Button variant="outline" size="sm" onClick={() => removeDevice(device.id)} disabled={devices.length === 1}>
                     <Trash2 className="w-4 h-4" />
                   </Button>
                 </div>
@@ -270,9 +254,7 @@ export default function ElectricityCalculator() {
                 <div className="pt-4 border-t">
                   <div className="flex justify-between items-center">
                     <span className="font-semibold">Estimasi Biaya Bulanan:</span>
-                    <span className="text-lg font-bold text-primary">
-                      Rp {(result.monthlyConsumption * electricityRate).toLocaleString("id-ID")}
-                    </span>
+                    <span className="text-lg font-bold text-primary">Rp {(result.monthlyConsumption * electricityRate).toLocaleString("id-ID")}</span>
                   </div>
                 </div>
 
@@ -284,48 +266,62 @@ export default function ElectricityCalculator() {
           </Card>
 
           {/* Charts */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Visualisasi Konsumsi</CardTitle>
+          <Card className="border-none shadow-lg rounded-2xl bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
+            <CardHeader className="pb-0">
+              <CardTitle className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">⚡ Visualisasi Konsumsi</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                {/* Pie Chart */}
-                <div>
-                  <h4 className="font-semibold mb-2">Distribusi Konsumsi per Perangkat</h4>
-                  <ResponsiveContainer width="100%" height={200}>
+            <CardContent className="mt-4 space-y-8">
+              {/* Pie Chart */}
+              <div>
+                <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-3">Distribusi Konsumsi per Perangkat</h4>
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="h-56">
+                  <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
-                      <Pie
-                        data={chartData}
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={80}
-                        fill="#8884d8"
-                        dataKey="value"
-                        label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                      >
+                      <Pie data={chartData} cx="50%" cy="50%" outerRadius={90} dataKey="value" label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}>
                         {chartData.map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={entry.color} />
                         ))}
                       </Pie>
-                      <Tooltip formatter={(value: number) => [`${value.toFixed(2)} kWh`, "Konsumsi"]} />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: "white",
+                          borderRadius: "8px",
+                          border: "none",
+                          boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                        }}
+                        formatter={(value: number) => [`${value.toFixed(2)} kWh`, "Konsumsi"]}
+                      />
                     </PieChart>
                   </ResponsiveContainer>
-                </div>
+                </motion.div>
+              </div>
 
-                {/* Bar Chart */}
-                <div>
-                  <h4 className="font-semibold mb-2">Konsumsi Bulanan per Perangkat</h4>
-                  <ResponsiveContainer width="100%" height={200}>
+              {/* Bar Chart */}
+              <div>
+                <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-3">Konsumsi Bulanan per Perangkat</h4>
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1 }} className="h-56">
+                  <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={chartData}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" />
-                      <YAxis />
-                      <Tooltip formatter={(value: number) => [`${value.toFixed(2)} kWh`, "Konsumsi"]} />
-                      <Bar dataKey="value" fill="#8884d8" />
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                      <XAxis dataKey="name" tick={{ fill: "#6b7280" }} />
+                      <YAxis tick={{ fill: "#6b7280" }} />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: "white",
+                          borderRadius: "8px",
+                          border: "none",
+                          boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                        }}
+                        formatter={(value: number) => [`${value.toFixed(2)} kWh`, "Konsumsi"]}
+                      />
+                      <Bar dataKey="value" radius={[8, 8, 0, 0]}>
+                        {chartData.map((entry, index) => (
+                          <Cell key={`cell-bar-${index}`} fill={entry.color} />
+                        ))}
+                      </Bar>
                     </BarChart>
                   </ResponsiveContainer>
-                </div>
+                </motion.div>
               </div>
             </CardContent>
           </Card>
@@ -371,5 +367,5 @@ export default function ElectricityCalculator() {
         </Card>
       )}
     </div>
-  )
+  );
 }
