@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Trash2, Plus, Calculator, Zap, DollarSign } from "lucide-react"
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, CartesianGrid, LabelList } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "./ui/chart"
 
 interface Device {
@@ -29,7 +29,13 @@ interface AIAnalysis {
   environmentalTips: string[]
 }
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"]
+const COLORS = [
+  "#1e6626",
+  "#1a4d6e",
+  "#136e8c",
+  "#0f7f9e",
+  "#0084d1",
+];
 
 export default function ElectricityCalculator() {
   const [devices, setDevices] = useState<Device[]>([{ id: "1", name: "", power: 0, dailyUsage: 0, quantity: 1 }])
@@ -275,10 +281,17 @@ export default function ElectricityCalculator() {
                 {/* Pie Chart */}
                 <div>
                   <h4 className="font-semibold mb-2">Distribusi Konsumsi per Perangkat</h4>
-                  <ChartContainer config={{}} className="[&_.recharts-text]:fill-background mx-auto aspect-square max-h-[250px]">
-                    <PieChart>
+                  <ChartContainer config={{}} className="mx-auto aspect-square max-h-[300px] [&_.recharts-text]:fill-black">
+                    <PieChart width={250} height={250}>
                       <ChartTooltip content={<ChartTooltipContent nameKey="value" hideLabel />} />
-                      <Pie data={chartData} dataKey="value" nameKey="name" label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}>
+                      <Pie
+                        data={chartData}
+                        dataKey="value"
+                        nameKey="name"
+                        outerRadius={80}
+                        labelLine={true}
+                        label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                      >
                         {chartData.map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={entry.color} />
                         ))}
@@ -295,7 +308,7 @@ export default function ElectricityCalculator() {
                       <CartesianGrid vertical={false} />
                       <XAxis dataKey="name" tickLine={false} tickMargin={10} axisLine={false} />
                       <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-                      <Bar dataKey="value" fill="#8884d8" radius={8} />
+                      <Bar dataKey="value" fill="#1e6626" radius={8} />
                     </BarChart>
                   </ChartContainer>
                 </div>
