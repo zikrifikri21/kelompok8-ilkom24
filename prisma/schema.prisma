@@ -7,22 +7,33 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Users {
-    id       String @id @default(uuid())
-    email    String @unique
-    password String
-}
-
-model Content {
-    id          String @id @default(uuid())
-    title       String @unique
-    description String
-}
-
 model AdminUsers {
-    id      Int     @id @default(autoincrement())
-    nama    String
-    address String?
-    image   String
-    
+    id         String   @id @default(cuid()) @map("id")
+    email      String   @unique @map("email")
+    role       String?  @default("admin") @map("role")
+    created_at DateTime @default(now()) @map("created_at")
+}
+
+model EducationalContent {
+    id           String           @id @default(cuid())
+    title        String
+    content      String
+    summary      String?
+    thumbnailUrl String?
+    createdAt    DateTime         @default(now())
+    updatedAt    DateTime         @default(now())
+    isPublished  Boolean          @default(true)
+    category     String?          @default("general")
+    tags         EducationalTag[]
+
+    @@index([isPublished], name: "idx_educational_content_published")
+    @@index([category], name: "idx_educational_content_category")
+    @@index([createdAt], name: "idx_educational_content_created_at")
+}
+
+model EducationalTag {
+    id                   String             @id @default(cuid())
+    name                 String
+    educationalContentId String
+    educationalContent   EducationalContent @relation(fields: [educationalContentId], references: [id])
 }
