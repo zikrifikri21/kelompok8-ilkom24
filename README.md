@@ -1,7 +1,9 @@
 # Hi! 👋
 
 # Kelompok 7 & 8 RPL
+[pake percel](https://kelompok8-ilkom24.vercel.app)
 
+[pake king netlify](https://kelmompoktupan.netlify.app/)
 ## Daftar kelompok
 
 | Peran   | Nama             | NIM       |
