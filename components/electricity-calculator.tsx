@@ -6,7 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Trash2, Plus, Calculator, Zap, DollarSign } from "lucide-react"
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, CartesianGrid, LabelList } from "recharts"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "./ui/chart"
 
 interface Device {
   id: string
@@ -28,7 +29,13 @@ interface AIAnalysis {
   environmentalTips: string[]
 }
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"]
+const COLORS = [
+  "#1e6626",
+  "#1a4d6e",
+  "#136e8c",
+  "#0f7f9e",
+  "#0084d1",
+];
 
 export default function ElectricityCalculator() {
   const [devices, setDevices] = useState<Device[]>([{ id: "1", name: "", power: 0, dailyUsage: 0, quantity: 1 }])
@@ -134,13 +141,7 @@ export default function ElectricityCalculator() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="rate">Tarif Listrik (IDR per kWh)</Label>
-              <Input
-                id="rate"
-                type="number"
-                value={electricityRate}
-                onChange={(e) => setElectricityRate(Number(e.target.value))}
-                placeholder="1500"
-              />
+              <Input id="rate" type="number" min={100} value={electricityRate} onChange={(e) => setElectricityRate(Math.max(100, Number(e.target.value)))} placeholder="1500" />
             </div>
           </div>
 
@@ -151,20 +152,21 @@ export default function ElectricityCalculator() {
               <div key={device.id} className="grid grid-cols-1 md:grid-cols-5 gap-4 p-4 border rounded-lg">
                 <div>
                   <Label htmlFor={`name-${device.id}`}>Nama Perangkat</Label>
-                  <Input
-                    id={`name-${device.id}`}
-                    value={device.name}
-                    onChange={(e) => updateDevice(device.id, "name", e.target.value)}
-                    placeholder="Contoh: TV LED"
-                  />
+                  <Input id={`name-${device.id}`} value={device.name} onChange={(e) => updateDevice(device.id, "name", e.target.value)} placeholder="Contoh: TV LED" />
                 </div>
                 <div>
                   <Label htmlFor={`power-${device.id}`}>Daya (Watt)</Label>
                   <Input
                     id={`power-${device.id}`}
                     type="number"
-                    value={device.power || ""}
-                    onChange={(e) => updateDevice(device.id, "power", Number(e.target.value))}
+                    value={device.power || 0}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      if (value < 0) {
+                        return;
+                      }
+                      updateDevice(device.id, "power", value);
+                    }}
                     placeholder="100"
                   />
                 </div>
@@ -175,7 +177,13 @@ export default function ElectricityCalculator() {
                     type="number"
                     step="0.5"
                     value={device.dailyUsage || ""}
-                    onChange={(e) => updateDevice(device.id, "dailyUsage", Number(e.target.value))}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      if (value < 0) {
+                        return;
+                      }
+                      updateDevice(device.id, "dailyUsage", value);
+                    }}
                     placeholder="8"
                   />
                 </div>
@@ -185,17 +193,18 @@ export default function ElectricityCalculator() {
                     id={`quantity-${device.id}`}
                     type="number"
                     value={device.quantity || ""}
-                    onChange={(e) => updateDevice(device.id, "quantity", Number(e.target.value))}
+                    onChange={(e) => {
+                      const value = Number(e.target.value);
+                      if (value < 1) {
+                        return;
+                      }
+                      updateDevice(device.id, "quantity", value);
+                    }}
                     placeholder="1"
                   />
                 </div>
                 <div className="flex items-end">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => removeDevice(device.id)}
-                    disabled={devices.length === 1}
-                  >
+                  <Button variant="outline" size="sm" onClick={() => removeDevice(device.id)} disabled={devices.length === 1}>
                     <Trash2 className="w-4 h-4" />
                   </Button>
                 </div>
@@ -251,9 +260,7 @@ export default function ElectricityCalculator() {
                 <div className="pt-4 border-t">
                   <div className="flex justify-between items-center">
                     <span className="font-semibold">Estimasi Biaya Bulanan:</span>
-                    <span className="text-lg font-bold text-primary">
-                      Rp {(result.monthlyConsumption * electricityRate).toLocaleString("id-ID")}
-                    </span>
+                    <span className="text-lg font-bold text-primary">Rp {(result.monthlyConsumption * electricityRate).toLocaleString("id-ID")}</span>
                   </div>
                 </div>
 
@@ -274,38 +281,36 @@ export default function ElectricityCalculator() {
                 {/* Pie Chart */}
                 <div>
                   <h4 className="font-semibold mb-2">Distribusi Konsumsi per Perangkat</h4>
-                  <ResponsiveContainer width="100%" height={200}>
-                    <PieChart>
+                  <ChartContainer config={{}} className="mx-auto aspect-square max-h-[300px] [&_.recharts-text]:fill-black">
+                    <PieChart width={250} height={250}>
+                      <ChartTooltip content={<ChartTooltipContent nameKey="value" hideLabel />} />
                       <Pie
                         data={chartData}
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={80}
-                        fill="#8884d8"
                         dataKey="value"
+                        nameKey="name"
+                        outerRadius={80}
+                        labelLine={true}
                         label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                       >
                         {chartData.map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={entry.color} />
                         ))}
                       </Pie>
-                      <Tooltip formatter={(value: number) => [`${value.toFixed(2)} kWh`, "Konsumsi"]} />
                     </PieChart>
-                  </ResponsiveContainer>
+                  </ChartContainer>
                 </div>
 
                 {/* Bar Chart */}
                 <div>
                   <h4 className="font-semibold mb-2">Konsumsi Bulanan per Perangkat</h4>
-                  <ResponsiveContainer width="100%" height={200}>
-                    <BarChart data={chartData}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" />
-                      <YAxis />
-                      <Tooltip formatter={(value: number) => [`${value.toFixed(2)} kWh`, "Konsumsi"]} />
-                      <Bar dataKey="value" fill="#8884d8" />
+                  <ChartContainer config={{}}>
+                    <BarChart accessibilityLayer data={chartData}>
+                      <CartesianGrid vertical={false} />
+                      <XAxis dataKey="name" tickLine={false} tickMargin={10} axisLine={false} />
+                      <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+                      <Bar dataKey="value" fill="#1e6626" radius={8} />
                     </BarChart>
-                  </ResponsiveContainer>
+                  </ChartContainer>
                 </div>
               </div>
             </CardContent>
@@ -352,5 +357,5 @@ export default function ElectricityCalculator() {
         </Card>
       )}
     </div>
-  )
+  );
 }

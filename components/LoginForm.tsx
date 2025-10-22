@@ -1,61 +1,61 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect } from "react"
-import { createClient } from "@/lib/supabase/client"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Checkbox } from "@/components/ui/checkbox"
-import Link from "next/link"
-import { useRouter, useSearchParams } from "next/navigation"
-import { Eye, EyeOff } from "lucide-react"
-import Image from "next/image"
+import { useState, useEffect } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
+import Image from "next/image";
 
 function LoginForm() {
-  const [fullName, setFullName] = useState("")
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [rememberMe, setRememberMe] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
-  const searchParams = useSearchParams()
+  const [fullName, setFullName] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    const errorParam = searchParams.get("error")
+    const errorParam = searchParams.get("error");
     if (errorParam === "unauthorized") {
-      setError("You don't have access. Please contact administrator.")
+      setError("You don't have access. Please contact administrator.");
     }
-  }, [searchParams])
+  }, [searchParams]);
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    const supabase = createClient()
-    setIsLoading(true)
-    setError(null)
+    e.preventDefault();
+    const supabase = createClient();
+    setIsLoading(true);
+    setError(null);
 
     try {
       const { error: authError } = await supabase.auth.signInWithPassword({
         email: fullName,
         password,
-      })
-      if (authError) throw authError
+      });
+      if (authError) throw authError;
 
       const {
         data: { user },
-      } = await supabase.auth.getUser()
+      } = await supabase.auth.getUser();
       if (user) {
-        router.push("/admin")
+        router.push("/admin");
       }
     } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An error occurred")
+      setError(error instanceof Error ? error.message : "An error occurred");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -141,11 +141,7 @@ function LoginForm() {
                     onChange={(e) => setPassword(e.target.value)}
                     className="bg-emerald-50 md:bg-gray-50 border-emerald-200 md:border-gray-200 focus:border-emerald-400 md:focus:border-green-500 focus:ring-emerald-400 md:focus:ring-green-500 rounded-xl h-12 pl-4 pr-12"
                   />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-600 md:text-gray-500 hover:text-emerald-700 md:hover:text-gray-700"
-                  >
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-emerald-600 md:text-gray-500 hover:text-emerald-700 md:hover:text-gray-700">
                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                   </button>
                 </div>
@@ -192,7 +188,7 @@ function LoginForm() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default LoginForm
+export default LoginForm;
