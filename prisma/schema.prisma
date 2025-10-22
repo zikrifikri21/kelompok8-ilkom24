@@ -1,0 +1,33 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model admin_users {
+    uuid       String   @id @default(cuid()) @map("id")
+    email      String   @unique @map("email")
+    password   String
+    role       String?  @default("admin") @map("role")
+    created_at DateTime @default(now()) @map("created_at")
+}
+
+model educational_content {
+    uuid         String   @id @default(cuid()) @map("id")
+    title        String
+    content      String
+    summary      String?
+    thumbnailUrl String?
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @default(now())
+    isPublished  Boolean  @default(true)
+    category     String?  @default("general")
+    tags         Json?    @default("{}")
+
+    @@index([isPublished], name: "idx_educational_content_published")
+    @@index([category], name: "idx_educational_content_category")
+    @@index([createdAt], name: "idx_educational_content_created_at")
+}
