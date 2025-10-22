@@ -157,19 +157,6 @@ export default function HomePage() {
                 </Button>
               </CardContent>
             </Card>
-
-            <Card className="border-border hover:shadow-lg transition-shadow duration-300">
-              <CardContent className="p-6">
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                  <Users className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">Komunitas</h3>
-                <p className="text-muted-foreground text-vintage mb-4">Bergabung dengan komunitas peduli lingkungan dan berbagi pengalaman hemat energi</p>
-                <Button variant="ghost" size="sm" className="p-0 h-auto">
-                  Gabung komunitas <ArrowRight className="ml-1 w-4 h-4" />
-                </Button>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </section>
@@ -180,13 +167,17 @@ export default function HomePage() {
           <h2 className="text-3xl md:text-4xl font-playfair text-retro mb-6">Mulai Perjalanan Hemat Energi Anda</h2>
           <p className="text-lg text-primary-foreground/80 mb-8 max-w-2xl mx-auto text-vintage">Bergabunglah dengan ribuan pengguna yang telah merasakan manfaat menghemat energi dan berkontribusi untuk planet yang lebih hijau</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" className="text-lg px-8 py-6">
-              Daftar Gratis
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8 py-6 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10 bg-transparent">
-              Lihat Demo
-            </Button>
+            <Link href="#calculator">
+              <Button size="lg" className="text-lg px-8 py-6 w-full bg-primary-foreground text-primary">
+                Mulai Sekarang
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </Link>
+            <Link href="/content">
+              <Button variant="outline" size="lg" className="text-lg px-8 py-6 bg-transparent text-primary-foreground w-full border-primary-foreground">
+                Jelajahi Konten Edukasi
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

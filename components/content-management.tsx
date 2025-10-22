@@ -413,14 +413,14 @@ function ContentList({ contents, onEdit, onDelete, isLoading }: ContentListProps
   }
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-y-4 gap-x-4 sm:grid-cols-2 lg:grid-cols-3">
       {contents.map((content) => (
         <Card key={content.id} className="flex flex-col transition-all hover:shadow-md">
           <CardHeader className="flex-1">
             <div className="flex flex-col sm:flex-row sm:items-start gap-3">
               <div className="flex-1 space-y-2">
-                <CardTitle className="text-lg line-clamp-2">{content.title}</CardTitle>
-                <CardDescription className="line-clamp-2">{content.summary}</CardDescription>
+                <CardTitle className="text-base sm:text-lg line-clamp-2">{content.title}</CardTitle>
+                <CardDescription className="text-sm line-clamp-2">{content.summary}</CardDescription>
               </div>
               <Badge variant={content.is_published ? "default" : "secondary"} className="self-start whitespace-nowrap">
                 {content.is_published ? "Published" : "Draft"}
@@ -443,17 +443,18 @@ function ContentList({ contents, onEdit, onDelete, isLoading }: ContentListProps
               )}
             </div>
 
-            <p className="text-sm text-muted-foreground">Dibuat: {new Date(content.created_at).toLocaleDateString("id-ID")}</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">Dibuat: {new Date(content.created_at).toLocaleDateString("id-ID")}</p>
           </CardContent>
 
-          <CardFooter className="flex justify-end gap-2">
-            <Button variant="outline" size="sm" onClick={() => onEdit(content)} className="w-12 md:w-full sm:w-auto">
-              <Edit className="w-4 h-4 md:mr-2" />
-              <p className="hidden md:block">Edit</p>
+          <CardFooter className="flex flex-col sm:flex-row justify-end gap-2 mt-auto">
+            <Button variant="outline" size="sm" onClick={() => onEdit(content)} className="w-full sm:w-auto flex justify-center sm:justify-start">
+              <Edit className="w-4 h-4 mr-0 sm:mr-2" />
+              <span className="hidden sm:inline">Edit</span>
             </Button>
-            <Button variant="outline" size="sm" onClick={() => onDelete(content.id)} className="w-12 md:w-full sm:w-auto">
-              <Trash2 className="w-4 h-4 md:mr-2" />
-              <p className="hidden md:block">Hapus</p>
+
+            <Button variant="outline" size="sm" onClick={() => onDelete(content.id)} className="w-full sm:w-auto flex justify-center sm:justify-start">
+              <Trash2 className="w-4 h-4 mr-0 sm:mr-2" />
+              <span className="hidden sm:inline">Hapus</span>
             </Button>
           </CardFooter>
         </Card>
