@@ -58,7 +58,7 @@ export default function HomePage() {
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-playfair text-retro text-foreground mb-6 text-balance">
               APLIKASI
               <br />
-              <span className="text-primary">TUPAN GACOR</span>
+              <span className="text-primary">HEMAT ENERGI</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-vintage text-pretty">
               Solusi cerdas untuk mengelola konsumsi energi, belajar tentang energi terbarukan, dan menciptakan masa depan yang lebih berkelanjutan
